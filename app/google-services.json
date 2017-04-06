@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "497677247655",
+    "firebase_url": "https://fcis-c5e40.firebaseio.com",
+    "project_id": "fcis-c5e40",
+    "storage_bucket": "fcis-c5e40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497677247655:android:83f6ea2e8ff6af4d",
+        "android_client_info": {
+          "package_name": "com.example.mahmoudshahen.fcis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "497677247655-e5tqnss80r6jpchebiplt12fdpir67t7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaF2f59SwGkVS2092BISOV_TjjfHKPwHI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

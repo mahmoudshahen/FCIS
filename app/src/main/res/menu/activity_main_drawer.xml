@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/sub1"
+            android:title="@string/subject1" />
+        <item
+            android:id="@+id/sub2"
+
+            android:title="@string/subject2" />
+        <item
+            android:id="@+id/sub3"
+
+            android:title="@string/subject3" />
+        <item
+            android:id="@+id/sub4"
+            android:title="@string/subject4" />
+        <item
+            android:id="@+id/sub5"
+            android:title="@string/subject5" />
+        <item
+            android:id="@+id/sub6"
+            android:title="@string/subject6" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_contact"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Contact Us" />
+        </menu>
+    </item>
+
+</menu>

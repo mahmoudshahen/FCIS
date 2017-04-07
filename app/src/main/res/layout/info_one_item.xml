@@ -8,6 +8,7 @@
     app:cardPreventCornerOverlap="false"
     android:layout_margin="5dp"
     android:elevation="2dp"
+    android:id="@+id/cv_send_email"
     >
 <LinearLayout
     android:orientation="vertical"
@@ -17,13 +18,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:text="Mahmoud Shahen"
-    android:textSize="28sp"
+    android:textSize="25sp"
     android:textColor="@color/colorAccent"
     android:paddingTop="10dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingBottom="5dp"
     android:id="@+id/tv_name"
+    android:maxLines="2"
     />
     <TextView
         android:layout_width="match_parent"
@@ -34,7 +36,7 @@
         android:textColor="#565454"
         android:id="@+id/tv_email"
         android:paddingBottom="2dp"
-        android:textIsSelectable="true"
+        android:maxLines="2"
         />
     <ImageView
         android:layout_width="wrap_content"

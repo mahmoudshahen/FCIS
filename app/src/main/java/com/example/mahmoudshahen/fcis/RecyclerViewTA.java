@@ -2,6 +2,7 @@ package com.example.mahmoudshahen.fcis;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +55,20 @@ public class RecyclerViewTA extends RecyclerView.Adapter<RecyclerViewTA.ViewHold
                 else {
                     Toast.makeText(context, "No App To Share.", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                emailIntent.setType("plain/text");
+                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{instructors.get(position).getEmail()});
+                if(emailIntent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+                }
+                else {
+                    Toast.makeText(context, "No App To Share.", Toast.LENGTH_LONG).show();
+                }
 
             }
         });
@@ -69,11 +84,13 @@ public class RecyclerViewTA extends RecyclerView.Adapter<RecyclerViewTA.ViewHold
 
         protected TextView textViewName, textViewEmail;
         ImageView imageView;
+        CardView cardView;
         public ViewHolder(View itemView) {
             super(itemView);
             textViewName=(TextView) itemView.findViewById(R.id.tv_name);
             textViewEmail = (TextView)  itemView.findViewById(R.id.tv_email);
             imageView = (ImageView) itemView.findViewById(R.id.iv_share);
+            cardView = (CardView)itemView.findViewById(R.id.cv_send_email);
         }
     }
 }

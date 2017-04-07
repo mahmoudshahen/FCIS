@@ -3,6 +3,7 @@ package com.example.mahmoudshahen.fcis;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -40,7 +41,7 @@ public class DialogAdd extends Dialog {
         buttonDismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cancel();
+                dismiss();
             }
         });
         buttonAdd.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +53,8 @@ public class DialogAdd extends Dialog {
                     instructor.setEmail(textEmail.getText().toString());
                     String key = databaseReference.push().getKey();
                     databaseReference.child(MainActivity.subject).child(key).setValue(instructor);
-                    cancel();
+                    Log.v("fff", "300");
+                    DialogAdd.this.dismiss();
                 }
             }
         });

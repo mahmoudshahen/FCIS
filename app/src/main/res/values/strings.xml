@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FCIS</string>
+    <string name="app_name">Wasla FCIS</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -11,4 +11,5 @@
     <string name="subject4">Artificial Intelligence</string>
     <string name="subject5">System Analysis</string>
     <string name="subject6">DataBase</string>
+    <string name="email">mahmoud.salah@cis.asu.edu.eg</string>
 </resources>

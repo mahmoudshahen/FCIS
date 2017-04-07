@@ -2,6 +2,7 @@ package com.example.mahmoudshahen.fcis;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -33,12 +35,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private Fragment fragment = null;
     public static String subject;
     List<Instructor> instructors;
     RecyclerView recyclerView;
     RecyclerViewTA recyclerViewAdapter;
     ChildEventListener listener;
+    FloatingActionButton fab;
+    DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,27 +49,39 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         subject = getString(R.string.subject1);
+        setTitle(getString(R.string.subject1));
         recyclerView = (RecyclerView)findViewById(R.id.rv_emails);
+
         instructors = new ArrayList<>();
 
         recyclerViewAdapter = new RecyclerViewTA(instructors, this);
-
+        instructors = loadData(instructors);
         DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
         defaultItemAnimator.setAddDuration(1000);
         defaultItemAnimator.setRemoveDuration(1000);
         recyclerView.setItemAnimator(defaultItemAnimator);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerViewAdapter);
 
-        loadData();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogAdd dialogAdd = new DialogAdd(MainActivity.this);
                 dialogAdd.show();
+            }
+        });
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                    if (dy > 0)
+                        fab.hide();
+                    else if (dy < 0)
+                        fab.show();
+
             }
         });
 
@@ -78,8 +93,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
     }
 
     @Override
@@ -107,9 +120,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
+            Toast.makeText(this,"Oops..", Toast.LENGTH_LONG).show();
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -119,38 +133,58 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+    databaseReference.removeEventListener(listener);
         if (id == R.id.sub1) {
             // Handle the camera action
+            fab.show();
             subject = getString(R.string.subject1);
-            loadData();
+            instructors = loadData(instructors);
+            setTitle(getString(R.string.subject1));
         } else if (id == R.id.sub2) {
+            fab.show();
             subject = getString(R.string.subject2);
-            loadData();
+            instructors = loadData(instructors);
+            setTitle(getString(R.string.subject2));
         } else if (id == R.id.sub3) {
+            fab.show();
             subject = getString(R.string.subject3);
-            loadData();
+            instructors = loadData(instructors);
+            setTitle(getString(R.string.subject3));
         } else if (id == R.id.sub4) {
+            fab.show();
             subject = getString(R.string.subject4);
-            loadData();
+            instructors = loadData(instructors);
+            setTitle(getString(R.string.subject4));
         } else if (id == R.id.sub5) {
+            fab.show();
             subject = getString(R.string.subject5);
-            loadData();
+            instructors = loadData(instructors);
+            setTitle(getString(R.string.subject5));
         } else if (id == R.id.sub6) {
+            fab.show();
             subject = getString(R.string.subject6);
-            loadData();
-        } else if(id == R.id.nav_contact) {
-
+            instructors = loadData(instructors);
+            setTitle(getString(R.string.subject6));
+        } else if(id == R.id.nav_feedback) {
+            final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+            emailIntent.setType("plain/text");
+            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{getString(R.string.email)});
+            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "feedback");
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void loadData() {
+    public List<Instructor> loadData(final List<Instructor> ins) {
+
         instructors.clear();
+        recyclerViewAdapter = new RecyclerViewTA(instructors, this);
+        recyclerView.setAdapter(recyclerViewAdapter);
+       // Log.v("bb", String.valueOf(instructors.size()));
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference databaseReference = firebaseDatabase.getReference("/FCIS/"+subject);
+        databaseReference = firebaseDatabase.getReference("/FCIS/"+subject);
 
         listener = new ChildEventListener() {
             @Override
@@ -158,9 +192,9 @@ public class MainActivity extends AppCompatActivity
                 Instructor instructor = new Instructor();
                 instructor.setName(dataSnapshot.child("name").getValue(String.class));
                 instructor.setEmail(dataSnapshot.child("email").getValue(String.class));
-                instructors.add(instructor);
+                Log.v("dasd", "2");
+                ins.add(instructor);
                 recyclerViewAdapter.notifyDataSetChanged();
-                //Log.v("size", String.valueOf(instructors.size()));
             }
 
             @Override
@@ -184,6 +218,6 @@ public class MainActivity extends AppCompatActivity
             }
         };
         databaseReference.addChildEventListener(listener);
+        return ins;
     }
-
 }

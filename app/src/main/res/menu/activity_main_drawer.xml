@@ -27,9 +27,9 @@
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_contact"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Contact Us" />
+                android:id="@+id/nav_feedback"
+                android:icon="@android:drawable/ic_dialog_email"
+                android:title="Feedback" />
         </menu>
     </item>
 
